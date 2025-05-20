@@ -1,3 +1,41 @@
+```bash
+"""
+# Exported for capture the meory
+
+export PT_HPU_ENABLE_EXECUTION_THREAD_NO_WAIT=1
+export PT_HPU_EAGER_4_STAGE_PIPELINE_ENABLE=0
+export PT_HPU_EAGER_PIPELINE_ENABLE=0
+export PT_HPU_DISABLE_ASYNC_COLLECTIVE=1
+export PT_HPU_ENABLE_LAZY_EAGER_LAUNCH_EXEC_THREAD=0
+export PT_HPU_ENABLE_LAZY_EAGER_EXECUTION_THREAD=0
+export PT_HPU_ENABLE_COMPILE_THREAD=0
+export PT_HPU_ENABLE_EXECUTION_THREAD=0
+export PT_HPU_LAZY_ACC_PAR_MODE=0
+export PT_HPU_SYNC_LAUNCH=1
+
+
+export PT_TOWL_LOG_ENABLE=1
+export HABANA_LOGS=.habana_logs-pp-mem-30
+
+"""
+"""
+# Register the memory interceptor
+import towl.instrument as ti
+class HpuModelAdapter:
+
+    def __init__(self, model, vllm_config, layer_names):
+        # ti.MemoryInterceptor.install_wrappers_on(model,  recursive=True)
+        
+        ti.MemoryInterceptor.enable(0.5)
+"""
+
+"""
+# Post process the log file
+python -m towl.db create from-log-file /mnt/disk3/yiliu4/vllm-fork/scripts/.habana_logs-pp-mem-30/0/towl_log.txt -o ./pp-mem-db/test30/rank0 --overwrite
+python pp_mem_tracker.py --rank 0 --test 30 --start 460
+"""
+```
+
 Torch OWL (towl)
 =================
 

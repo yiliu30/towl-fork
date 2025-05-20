@@ -34,13 +34,14 @@ def dump_cudamemviz(view: ScenarioView, snapshot_path: str, html_path: Optional[
     if html_path is not None:
         cv.extract.to_html(snapshot_path, html_path)
 
+from tqdm import tqdm
 
 def build_cudamemviz(view: ScenarioView):
     xs = []
     df = view._query_devmem_bufs_full()
     b = cv.Builder()
-
-    for i in range(len(df)):
+        
+    for i in tqdm(range(len(df)), desc="Building snapshot", unit="entry"):
         import json
 
         entry = df.iloc[i]
