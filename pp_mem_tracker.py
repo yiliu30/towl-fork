@@ -60,8 +60,9 @@ plt.rcParams['figure.figsize'] = (12, 5)
 
 
 import towl.user as tu
-
-file_name = f"./pp-mem-db/test{test}/rank{rank}"
+prefix="a-pp-mem-db"
+#./a-pp-mem-db/test5/rank0 --overwrite
+file_name = f"./{prefix}/test{test}/rank{rank}"
 
 scenario = tu.Scenario(file_name)
 
@@ -102,7 +103,7 @@ print('Hill -1 =', global_hills[-1])
 
 hill_view = scenario.make_view(global_hills[0])
 tu.lib.dump_cudamemviz(global_view, result_file, html_file)
-
+print(f"Dumped to {result_file} and {html_file}")
 """
 Building snapshot: 100%|█████████████████| 2099/2099 [00:00<00:00, 19109.84entry/s]
 > /usr/bin/python -m torch.cuda._memory_viz trace_plot -o 'global_decode_test_30_rank0_460_2959.html' 'global_decode_test_30_rank0_460_2959.pickle'
